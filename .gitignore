@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Terraform
+terraform/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+
+# Large binaries
+*.zip
+*.tar.gz
+*.exe
+*.dll

@@ -1,0 +1,114 @@
+
+services:
+  user-service:
+    build: ./user-service
+    container_name: foodsave-user
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - JWT_SECRET=foodsave-secret-dev-2024
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=foodsave_users
+      - DB_USER=foodsave
+      - DB_PASSWORD=foodsave123
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+
+  donation-service:
+    build: ./donation-service
+    container_name: foodsave-donation
+    ports:
+      - "3002:3002"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MONGODB_URI=mongodb://foodsave-mongodb:27017/foodsave
+    depends_on:
+      foodsave-mongodb:
+        condition: service_healthy
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+
+  notification-service:
+    build: ./notification-service
+    container_name: foodsave-notification
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - EMAIL_USER=foodsave.notifications@gmail.com
+      - EMAIL_PASS=password123
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+    depends_on:
+      - user-service
+      - donation-service
+
+  matching-service:
+    build: ./matching-service
+    container_name: foodsave-matching
+    ports:
+      - "3005:3005"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=3005
+      - DONATION_SERVICE_URL=http://donation-service:3002  # ← ajouter
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+    depends_on:
+      - donation-service
+      - user-service
+
+  foodsave-mongodb:
+    image: mongo:6
+    container_name: foodsave-mongodb
+    ports:
+      - "27020:27017"
+    volumes:
+      - foodsave_mongodb_data:/data/db
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  postgres:
+    image: postgres:15
+    container_name: foodsave-postgres
+    environment:
+      POSTGRES_DB: foodsave_users
+      POSTGRES_USER: foodsave
+      POSTGRES_PASSWORD: foodsave123
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - foodsave-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U foodsave"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  foodsave-network:
+    driver: bridge
+
+volumes:
+  foodsave_mongodb_data:
+  postgres_data:

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matching-service
+  namespace: foodsave
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: matching-service
+  template:
+    metadata:
+      labels:
+        app: matching-service
+    spec:
+      containers:
+      - name: matching-service
+        image: foodsave-app-matching-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3005
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matching-service
+  namespace: foodsave
+spec:
+  selector:
+    app: matching-service
+  ports:
+  - port: 3005
+    targetPort: 3005
+  type: ClusterIP

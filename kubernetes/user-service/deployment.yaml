@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: foodsave
+  labels:
+    app: user-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: foodsave-app-user-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3001
+        env:
+        - name: DB_HOST
+          value: postgres-service
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: foodsave_users
+        - name: DB_USER
+          value: foodsave
+        - name: DB_PASSWORD
+          value: foodsave123
+        - name: JWT_SECRET
+          value: foodsave-secret-dev-2024
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: foodsave
+spec:
+  selector:
+    app: user-service
+  ports:
+  - port: 3001
+    targetPort: 3001
+  type: ClusterIP

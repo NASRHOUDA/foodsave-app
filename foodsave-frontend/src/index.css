@@ -1,0 +1,213 @@
+/* ─────────────────────────────────────────
+   FoodSave — index.css
+   Variables globales & reset de base
+   ───────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  /* ── Couleurs ── */
+  --bg:            #0b0e14;
+  --bg-surface:    rgba(255, 255, 255, 0.03);
+  --bg-elevated:   #151820;
+
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-hover:  rgba(255, 255, 255, 0.13);
+
+  --text:          rgba(240, 240, 240, 0.55);
+  --text-h:        #f0f0f0;
+  --text-muted:    rgba(240, 240, 240, 0.3);
+
+  --accent:        #4ade80;
+  --accent-bg:     rgba(74, 222, 128, 0.10);
+  --accent-border: rgba(74, 222, 128, 0.25);
+  --accent-hover:  #6ee7a0;
+
+  --danger:        #f87171;
+  --danger-bg:     rgba(248, 113, 113, 0.10);
+  --danger-border: rgba(248, 113, 113, 0.25);
+
+  --warning:       #f59e0b;
+  --warning-bg:    rgba(245, 158, 11, 0.10);
+
+  --info:          #60a5fa;
+  --info-bg:       rgba(96, 165, 250, 0.10);
+
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg:     0 10px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* ── Typographie ── */
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --heading: 'Syne', system-ui, sans-serif;
+  --mono:    ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* ── Rayons ── */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-full: 999px;
+
+  /* ── Transitions ── */
+  --transition: 0.15s ease;
+
+  /* ── Base ── */
+  font: 16px/1.6 var(--sans);
+  letter-spacing: 0.01em;
+  color-scheme: dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100svh;
+}
+
+/* ── Root layout ── */
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Headings ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; }
+
+/* ── Paragraph ── */
+p {
+  color: var(--text);
+  line-height: 1.65;
+}
+
+/* ── Links ── */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+a:hover {
+  opacity: 0.8;
+  color: var(--accent);
+}
+
+/* ── Code ── */
+code, pre, .mono {
+  font-family: var(--mono);
+  font-size: 0.875em;
+}
+
+code {
+  display: inline-flex;
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  line-height: 1.5;
+}
+
+pre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  color: var(--text-h);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.18); }
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+/* ── Focus visible ── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Utility classes ── */
+.text-accent  { color: var(--accent) !important; }
+.text-muted   { color: var(--text-muted) !important; }
+.text-heading { color: var(--text-h) !important; }
+
+.bg-surface   { background: var(--bg-surface); }
+.bg-elevated  { background: var(--bg-elevated); }
+
+.border-subtle {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.font-heading { font-family: var(--heading); }
+.font-sans    { font-family: var(--sans); }
+.font-mono    { font-family: var(--mono); }
+
+/* ── Animations globales ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Responsive helpers ── */
+@media (max-width: 768px) {
+  :root { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  :root { font-size: 14px; }
+}

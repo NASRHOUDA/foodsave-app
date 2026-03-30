@@ -92,14 +92,14 @@ pipeline {
                     withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
                         sh """
                             rm -rf gitops
-                            git clone https://NASRHOUDA:${GITHUB_TOKEN}@github.com/NASRHOUDA/foodsave-gitops.git gitops
+                            git clone https://NASRHOUDA:\${GITHUB_TOKEN}@github.com/NASRHOUDA/foodsave-gitops.git gitops
                             cd gitops/kubernetes
                             
-                            for service in user-service donation-service notification-service matching-service frontend; do
-                                if [ -f \${service}/deployment.yaml ]; then
-                                    sed -i "s|image:.*foodsave-\${service}.*|image: ${DOCKER_REGISTRY}/foodsave-\${service}:${BUILD_NUMBER}|g" \${service}/deployment.yaml
-                                fi
-                            done
+                            sed -i "s|image:.*foodsave-user.*|image: ${DOCKER_REGISTRY}/foodsave-user:${BUILD_NUMBER}|g" user-service/deployment.yaml
+                            sed -i "s|image:.*foodsave-donation.*|image: ${DOCKER_REGISTRY}/foodsave-donation:${BUILD_NUMBER}|g" donation-service/deployment.yaml
+                            sed -i "s|image:.*foodsave-notification.*|image: ${DOCKER_REGISTRY}/foodsave-notification:${BUILD_NUMBER}|g" notification-service/deployment.yaml
+                            sed -i "s|image:.*foodsave-matching.*|image: ${DOCKER_REGISTRY}/foodsave-matching:${BUILD_NUMBER}|g" matching-service/deployment.yaml
+                            sed -i "s|image:.*foodsave-frontend.*|image: ${DOCKER_REGISTRY}/foodsave-frontend:${BUILD_NUMBER}|g" frontend/deployment.yaml
                             
                             git config user.email "jenkins@foodsave.com"
                             git config user.name "Jenkins CI"

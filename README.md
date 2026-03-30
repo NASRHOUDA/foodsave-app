@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🍎 FoodSave
+<img src="docs/screenshots/logo.png" alt="FoodSave Logo" width="220"/>
+
+# FoodSave
 
 ### Plateforme Anti-Gaspillage Alimentaire
 
@@ -257,17 +259,19 @@ kubectl port-forward -n monitoring \
 | ![Matching](docs/screenshots/foodsave7.jpeg) | ![Interface association](docs/screenshots/foodsave8.jpeg) |
 | ![Dons disponibles](docs/screenshots/foodsave9.jpeg) | ![Suivi demandes](docs/screenshots/foodsave10.jpeg) |
 | ![Notifications](docs/screenshots/foodsave11.jpeg) | ![Grafana](docs/screenshots/foodsave12.jpeg) |
-| ![ArgoCD](docs/screenshots/foodsave14.jpeg) | ![Jenkins](docs/screenshots/foodsave15.jpeg) |
-| ![Kubernetes](docs/screenshots/foodsave16.jpeg) | |
+| ![ArgoCD](docs/screenshots/foodsave13.jpeg) | ![ArgoCD](docs/screenshots/foodsave14.jpeg) |
+| ![Jenkins](docs/screenshots/foodsave15.jpeg) | ![Kubernetes](docs/screenshots/foodsave16.jpeg) |
+| ![Monitoring](docs/screenshots/foodsave17.jpeg) | |
 
 ---
 
 ## 👩‍💻 Auteure
 
-**Nasr Houda** — DevOps Engineer & Full Stack Developer
+**Houda Nasr** — DevOps Engineer & Full Stack Developer
 
-[![Email](https://img.shields.io/badge/Email-houdanasr414%40gmail.com-3B6D11?style=flat-square&logo=gmail&logoColor=white)](mailto:houdanasr414@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nasr%20Houda-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/nasr-houda)
+[![Portfolio](https://img.shields.io/badge/Portfolio-houdasnasr.vercel.app-3B6D11?style=flat-square&logo=safari&logoColor=white)](https://houdanasr.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Houda%20Nasr-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/houda-nasr-16b9a032a/)
+[![Email](https://img.shields.io/badge/Email-houdanasr520%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:houdanasr520@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-NASRHOUDA-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/NASRHOUDA)
 
 ---
@@ -280,6 +284,8 @@ Ce projet est distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE
 
 <div align="center">
 
-**🍎 FoodSave — Donnons une seconde vie aux aliments**
+<img src="docs/screenshots/logo.png" alt="FoodSave" width="48"/>
+
+**FoodSave — Donnons une seconde vie aux aliments 🌱**
 
 </div>

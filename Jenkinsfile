@@ -24,45 +24,35 @@ pipeline {
                 stage('Build user-service') {
                     steps {
                         dir('user-service') {
-                            script {
-                                docker.build("${DOCKER_REGISTRY}/foodsave-user:${BUILD_NUMBER}")
-                            }
+                            sh "docker build --load -t ${DOCKER_REGISTRY}/foodsave-user:${BUILD_NUMBER} ."
                         }
                     }
                 }
                 stage('Build donation-service') {
                     steps {
                         dir('donation-service') {
-                            script {
-                                docker.build("${DOCKER_REGISTRY}/foodsave-donation:${BUILD_NUMBER}")
-                            }
+                            sh "docker build --load -t ${DOCKER_REGISTRY}/foodsave-donation:${BUILD_NUMBER} ."
                         }
                     }
                 }
                 stage('Build notification-service') {
                     steps {
                         dir('notification-service') {
-                            script {
-                                docker.build("${DOCKER_REGISTRY}/foodsave-notification:${BUILD_NUMBER}")
-                            }
+                            sh "docker build --load -t ${DOCKER_REGISTRY}/foodsave-notification:${BUILD_NUMBER} ."
                         }
                     }
                 }
                 stage('Build matching-service') {
                     steps {
                         dir('matching-service') {
-                            script {
-                                docker.build("${DOCKER_REGISTRY}/foodsave-matching:${BUILD_NUMBER}")
-                            }
+                            sh "docker build --load -t ${DOCKER_REGISTRY}/foodsave-matching:${BUILD_NUMBER} ."
                         }
                     }
                 }
                 stage('Build frontend') {
                     steps {
                         dir('foodsave-frontend') {
-                            script {
-                                docker.build("${DOCKER_REGISTRY}/foodsave-frontend:${BUILD_NUMBER}")
-                            }
+                            sh "docker build --load -t ${DOCKER_REGISTRY}/foodsave-frontend:${BUILD_NUMBER} ."
                         }
                     }
                 }
@@ -72,7 +62,13 @@ pipeline {
         stage('Push to Registry') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-hub') {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'docker-hub',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )]) {
+                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        
                         def images = [
                             'foodsave-user',
                             'foodsave-donation',
@@ -81,8 +77,9 @@ pipeline {
                             'foodsave-frontend'
                         ]
                         images.each { img ->
-                            docker.image("${DOCKER_REGISTRY}/${img}:${BUILD_NUMBER}").push()
-                            docker.image("${DOCKER_REGISTRY}/${img}:${BUILD_NUMBER}").push('latest')
+                            sh "docker push ${DOCKER_REGISTRY}/${img}:${BUILD_NUMBER}"
+                            sh "docker tag ${DOCKER_REGISTRY}/${img}:${BUILD_NUMBER} ${DOCKER_REGISTRY}/${img}:latest"
+                            sh "docker push ${DOCKER_REGISTRY}/${img}:latest"
                         }
                     }
                 }
@@ -94,19 +91,20 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
                         sh """
+                            rm -rf gitops
                             git clone https://NASRHOUDA:${GITHUB_TOKEN}@github.com/NASRHOUDA/foodsave-gitops.git gitops
                             cd gitops/kubernetes
                             
                             for service in user-service donation-service notification-service matching-service frontend; do
                                 if [ -f \${service}/deployment.yaml ]; then
-                                    sed -i "s|image:.*|image: ${DOCKER_REGISTRY}/foodsave-\${service}:${BUILD_NUMBER}|g" \${service}/deployment.yaml
+                                    sed -i "s|image:.*foodsave-\${service}.*|image: ${DOCKER_REGISTRY}/foodsave-\${service}:${BUILD_NUMBER}|g" \${service}/deployment.yaml
                                 fi
                             done
                             
                             git config user.email "jenkins@foodsave.com"
                             git config user.name "Jenkins CI"
                             git add .
-                            git commit -m "Update all services to build ${BUILD_NUMBER}"
+                            git diff --staged --quiet || git commit -m "Update all services to build ${BUILD_NUMBER}"
                             git push
                         """
                     }
@@ -116,6 +114,9 @@ pipeline {
     }
     
     post {
+        always {
+            sh 'docker logout || true'
+        }
         success {
             echo '✅ Pipeline completed successfully!'
         }

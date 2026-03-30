@@ -259,7 +259,7 @@ kubectl port-forward -n monitoring \
 | ![Matching](docs/screenshots/foodsave7.jpeg) | ![Interface association](docs/screenshots/foodsave8.jpeg) |
 | ![Dons disponibles](docs/screenshots/foodsave9.jpeg) | ![Suivi demandes](docs/screenshots/foodsave10.jpeg) |
 | ![Notifications](docs/screenshots/foodsave11.jpeg) | ![Grafana](docs/screenshots/foodsave12.jpeg) |
-| ![ArgoCD](docs/screenshots/foodsave13.jpeg) | ![ArgoCD](docs/screenshots/foodsave14.jpeg) |
+| ![ArgoCD](docs/screenshots/foodsave13.png) | ![ArgoCD](docs/screenshots/foodsave14.jpeg) |
 | ![Jenkins](docs/screenshots/foodsave15.jpeg) | ![Kubernetes](docs/screenshots/foodsave16.jpeg) |
 | ![Monitoring](docs/screenshots/foodsave17.jpeg) | |
 

@@ -27,7 +27,7 @@
 
 **FoodSave** est une plateforme qui connecte les **commerçants** ayant des invendus alimentaires avec des **associations** locales pour lutter contre le gaspillage. Un algorithme de matching intelligent calcule automatiquement les meilleures correspondances, et un système de notifications WebSocket synchronise les acteurs en temps réel.
 
-> 🍽️ 10 millions de repas jetés chaque jour en France · 🤝 3 500 associations manquent de ressources · 👥 8 millions de personnes ont besoin d'aide alimentaire
+> 🍽️ 10 millions de repas jetés chaque jour · 🤝 3 500 associations manquent de ressources · 👥 8 millions de personnes ont besoin d'aide alimentaire
 
 ---
 
